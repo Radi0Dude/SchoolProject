@@ -1,0 +1,11 @@
+# ninja log v5
+35	281	7350921899170362	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	446d1c304f94e904
+282	495	7350921900580648	C:/Users/Tobia/Documents/UnityGames/WaterPhysicsStuff/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/246r3l26/obj/arm64-v8a/libswappywrapper.so	9c57268eefa7abd8
+20	828	7350921904601102	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	642bbf25092319fb
+0	848	7350921904794728	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	725aeb5339491891
+15	860	7350921904930965	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	2ba5f8ef87d2aa9e
+30	911	7350921905458483	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	75025e6bddcd3d1f
+6	947	7350921905827901	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	47f43f88bd3962e7
+25	1073	7350921907085851	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	f3e6a846e00a553d
+11	1144	7350921907804805	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	9965078967ba563
+1145	1265	7350921908664523	C:/Users/Tobia/Documents/UnityGames/WaterPhysicsStuff/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/246r3l26/obj/arm64-v8a/libgame.so	d0ba0e3550f6d37f
