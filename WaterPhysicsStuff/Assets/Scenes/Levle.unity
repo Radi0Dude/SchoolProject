@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 14151579}
   - component: {fileID: 14151578}
   - component: {fileID: 14151577}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,10 +238,9 @@ GameObject:
   - component: {fileID: 143421774}
   - component: {fileID: 143421773}
   - component: {fileID: 143421778}
-  - component: {fileID: 143421777}
   - component: {fileID: 143421781}
   - component: {fileID: 143421780}
-  - component: {fileID: 143421779}
+  - component: {fileID: 143421782}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -310,27 +309,12 @@ Transform:
   m_GameObject: {fileID: 143421771}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.3431969, y: 1.5, z: 5.365675}
+  m_LocalPosition: {x: 3.3431969, y: 14.62, z: 5.365675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &143421777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143421771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8fd6c279b7bf3844b40640c789c992d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  springHeight: 0.5
-  damper: 0
-  raylenght: 4.31
 --- !u!114 &143421778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,9 +342,9 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 143421777}
-        m_TargetAssemblyTypeName: S_Movement, Assembly-CSharp
-        m_MethodName: GetButtonPressed
+      - m_Target: {fileID: 143421782}
+        m_TargetAssemblyTypeName: RBCharacterController, Assembly-CSharp
+        m_MethodName: OnMovement
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -374,7 +358,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 143421777}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: S_Movement, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
@@ -393,21 +377,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &143421779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143421771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8fd6c279b7bf3844b40640c789c992d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  springHeight: 0
-  damper: 0
-  raylenght: 2
 --- !u!54 &143421780
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -458,6 +427,27 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &143421782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143421771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b846a47c9dde734e9c47a823db1493a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
+  isItemObject: 0
+  springHeight: 0
+  springStrenght: 0
+  springDamper: 0
+  springLenght: 0
+  playerSpeed: 5
 --- !u!1 &710014294
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,8 +702,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133542928}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.114849724, y: -0.0764181, z: 0.008861674, w: 0.9903996}
-  m_LocalPosition: {x: 4.113197, y: 3.2800002, z: 0.40567493}
+  m_LocalRotation: {x: 0.11484964, y: -0.0764181, z: 0.0088616675, w: 0.9903996}
+  m_LocalPosition: {x: 4.113197, y: 16.4, z: 0.40567493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -806,8 +796,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519947166}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.114849724, y: -0.0764181, z: 0.008861674, w: 0.9903996}
-  m_LocalPosition: {x: 4.113197, y: 3.2800002, z: 0.40567493}
+  m_LocalRotation: {x: 0.11484964, y: -0.0764181, z: 0.0088616675, w: 0.9903996}
+  m_LocalPosition: {x: 4.113197, y: 16.4, z: 0.40567493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -859,7 +849,7 @@ GameObject:
   - component: {fileID: 2002758714}
   - component: {fileID: 2002758713}
   - component: {fileID: 2002758712}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
