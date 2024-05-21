@@ -31,6 +31,12 @@ public class RBCharacterController : MonoBehaviour
 	//Movement
 	[SerializeField]
 	float playerSpeed;
+
+	[SerializeField]
+	float stoppingForce;
+
+	[SerializeField]
+	private float jumpPower;
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -40,7 +46,11 @@ public class RBCharacterController : MonoBehaviour
 	private void FixedUpdate()
 	{
 		SpringController();
-		//Movement();
+		Movement();
+		if(isGrounded && Input.GetKeyDown(KeyCode.Space))
+		{
+			Jump();
+		}
 	}
 
 	private void SpringController()
@@ -50,8 +60,7 @@ public class RBCharacterController : MonoBehaviour
 		isGrounded = false;
 
 		bool rayDidHit = Physics.Raycast(ray, out hit, springLenght, ground);
-		Debug.Log(rayDidHit);
-		Debug.Log(rb.velocity);
+
 		if (!rayDidHit)
 		{
 			return;
@@ -112,8 +121,16 @@ public class RBCharacterController : MonoBehaviour
 		rb.AddForce(dir.x * playerSpeed, 0, dir.y * playerSpeed);
 		if(dir == Vector2.zero && rb.velocity != Vector3.zero)
 		{
-			rb.velocity = Vector3.zero;
-		}
+			if(isGrounded)
+			{
+				rb.AddForce(-rb.velocity.x * stoppingForce, 0, -rb.velocity.z * stoppingForce);			
+			}
 
+		}
+	}
+
+	private void Jump()
+	{
+		rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
 	}
 }
