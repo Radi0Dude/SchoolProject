@@ -118,7 +118,14 @@ public class RBCharacterController : MonoBehaviour
 
 	private void Movement()
 	{
-		rb.AddForce(dir.x * playerSpeed, 0, dir.y * playerSpeed);
+		Vector2 groundedMovement = new Vector2(rb.velocity.x, rb.velocity.z);
+		if(isGrounded)
+		{
+			rb.AddForce(dir.x * playerSpeed, 0, dir.y * playerSpeed);
+		}
+
+
+		
 		if(dir == Vector2.zero && rb.velocity != Vector3.zero)
 		{
 			if(isGrounded)
@@ -127,10 +134,17 @@ public class RBCharacterController : MonoBehaviour
 			}
 
 		}
+		
+		
 	}
 
 	private void Jump()
 	{
 		rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
+	}
+
+	private void Swimming()
+	{
+
 	}
 }
