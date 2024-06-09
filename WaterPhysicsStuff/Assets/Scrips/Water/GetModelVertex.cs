@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GetModelVertex : MonoBehaviour
+public class GetModelVertex : MonoBehaviour, IInteractable
 {
 	
 	MeshFilter meshFilter;
@@ -114,5 +114,22 @@ public class GetModelVertex : MonoBehaviour
 		return buoyancyForce;
 	}
 
-	
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.GetComponent<PlayerTag>())
+		{
+			//Display interact UI
+		}
+	}
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.GetComponent<PlayerTag>())
+		{
+			//stop Display interact UI
+		}
+	}
+	public void Interact()
+	{
+		
+	}
 }
