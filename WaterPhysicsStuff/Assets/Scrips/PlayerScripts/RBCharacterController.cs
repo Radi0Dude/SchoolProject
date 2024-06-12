@@ -51,10 +51,16 @@ public class RBCharacterController : MonoBehaviour
 	private float jumpPower;
 
 	float swimUp;
+
+	Vector3 rotation;
+
+	[SerializeField]
+	Transform cam;
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
 		modifiedSpringHeight = springHeight;
+		checkMovementStyle = 0;
 	}
 
 	private void FixedUpdate()
@@ -72,7 +78,9 @@ public class RBCharacterController : MonoBehaviour
         {
 			Swimming();
         }
-  
+		Quaternion pRot = transform.rotation;
+
+		rotation = pRot.eulerAngles;
 	}
 
 	private void SpringController()
@@ -151,10 +159,16 @@ public class RBCharacterController : MonoBehaviour
 	public void OnMovement(InputAction.CallbackContext context)
 	{
 		dir = context.ReadValue<Vector2>();
+		
 	}
 
 	private void Movement()
 	{
+		if(dir != Vector2.zero)
+		{
+			transform.localEulerAngles = new Vector3(0, cam.transform.localEulerAngles.y, 0);
+			Debug.Log("Ejjjjj");
+		}
         if (!rb.useGravity)
         {
 			rb.drag = 0;
@@ -165,7 +179,18 @@ public class RBCharacterController : MonoBehaviour
         Vector2 groundedMovement = new Vector2(rb.velocity.x, rb.velocity.z);
 		if(isGrounded)
 		{
-			rb.AddForce(dir.x * playerSpeed, 0, dir.y * playerSpeed);
+			if(rb.drag == 0)
+			{
+				rb.drag = 2;
+			}
+			rb.AddRelativeForce(dir.x * playerSpeed, 0, dir.y * playerSpeed);
+		}
+		else
+		{
+			if (rb.drag != 0)
+			{
+				rb.drag = 0;
+			}
 		}
 
 
@@ -178,8 +203,6 @@ public class RBCharacterController : MonoBehaviour
 			}
 
 		}
-		
-		
 	}
 
 	private void Jump()
@@ -189,6 +212,7 @@ public class RBCharacterController : MonoBehaviour
 
 	private void Swimming()
 	{
+		Debug.Log("you be swimming");
 		if (rb.useGravity)
 		{			
 			rb.drag = waterDrag;
@@ -202,7 +226,7 @@ public class RBCharacterController : MonoBehaviour
 		{
 			swimUp = 0;
 		}
-		rb.AddForce(dir.x * playerSpeed, swimUp * playerSpeed, dir.y * playerSpeed);
+		rb.AddRelativeForce(dir.x * playerSpeed, swimUp * playerSpeed, dir.y * playerSpeed);
 		
 	}
 }
