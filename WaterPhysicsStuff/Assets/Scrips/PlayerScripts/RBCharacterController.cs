@@ -1,6 +1,9 @@
+using JetBrains.Annotations;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,6 +31,15 @@ public class RBCharacterController : MonoBehaviour
 
 	Vector2 dir;
 
+	int checkMovementStyle;
+
+	[SerializeField]
+	float waterDrag;
+
+	[Layer]
+	[SerializeField]
+	string waterLayer;
+
 	//Movement
 	[SerializeField]
 	float playerSpeed;
@@ -37,6 +49,8 @@ public class RBCharacterController : MonoBehaviour
 
 	[SerializeField]
 	private float jumpPower;
+
+	float swimUp;
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -45,12 +59,20 @@ public class RBCharacterController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		SpringController();
-		Movement();
-		if(isGrounded && Input.GetKeyDown(KeyCode.Space))
+		if(checkMovementStyle == 0)
 		{
-			Jump();
+			SpringController();
+			Movement();      
+			if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+			{
+				Jump();
+			}
 		}
+		else if (checkMovementStyle == 1)
+        {
+			Swimming();
+        }
+  
 	}
 
 	private void SpringController()
@@ -111,6 +133,21 @@ public class RBCharacterController : MonoBehaviour
 		
 	}
 
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.gameObject.layer == LayerMask.NameToLayer(waterLayer))
+		{
+			checkMovementStyle = 1;
+		}
+	}
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.layer == LayerMask.NameToLayer(waterLayer))
+		{
+			checkMovementStyle = 0;
+		}
+	}
+
 	public void OnMovement(InputAction.CallbackContext context)
 	{
 		dir = context.ReadValue<Vector2>();
@@ -118,7 +155,14 @@ public class RBCharacterController : MonoBehaviour
 
 	private void Movement()
 	{
-		Vector2 groundedMovement = new Vector2(rb.velocity.x, rb.velocity.z);
+        if (!rb.useGravity)
+        {
+			rb.drag = 0;
+			swimUp = 0;
+            rb.useGravity = true;
+			
+        }
+        Vector2 groundedMovement = new Vector2(rb.velocity.x, rb.velocity.z);
 		if(isGrounded)
 		{
 			rb.AddForce(dir.x * playerSpeed, 0, dir.y * playerSpeed);
@@ -145,6 +189,20 @@ public class RBCharacterController : MonoBehaviour
 
 	private void Swimming()
 	{
-
+		if (rb.useGravity)
+		{			
+			rb.drag = waterDrag;
+			rb.useGravity = false;
+		}
+		if (Input.GetKey(KeyCode.Space))
+		{
+			swimUp = 1;
+		}
+		else
+		{
+			swimUp = 0;
+		}
+		rb.AddForce(dir.x * playerSpeed, swimUp * playerSpeed, dir.y * playerSpeed);
+		
 	}
 }

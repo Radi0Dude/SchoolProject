@@ -447,6 +447,8 @@ MonoBehaviour:
   springStrenght: 5
   springDamper: 5
   springLenght: 5
+  waterDrag: 0
+  waterLayer: Default
   playerSpeed: 5
   stoppingForce: 5
   jumpPower: 10
