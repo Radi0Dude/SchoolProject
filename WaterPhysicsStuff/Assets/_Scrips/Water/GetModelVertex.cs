@@ -21,8 +21,8 @@ public class GetModelVertex : MonoBehaviour, IInteractable
 
 	Rigidbody rb;
 
-	[SerializeField]
-	float objectDensity;
+	
+	public float objectDensity;
 
 	private void Awake()
 	{
@@ -97,14 +97,14 @@ public class GetModelVertex : MonoBehaviour, IInteractable
 			Debug.Log(calculateProcentahe);
 			Vector3 calculateForce = CalculateBouency(densityOfWater, objectVolume * calculateProcentahe);
 			rb.drag = (1 * calculateProcentahe + .2f) /2;
-			rb.AddForce(calculateForce, ForceMode.Force);
+			rb.AddForce(calculateForce / 1000, ForceMode.Force);
 			
 		}
 	}
 	private void Update()
 	{
 		float objectDensityUpdate = objectDensity * objectVolume;
-		rb.mass = objectDensityUpdate;
+		rb.mass = objectDensityUpdate / 1000;
 	}
 
 	Vector3 CalculateBouency(float denistyOfLiquid, float volumeOfDisplaecedWater)
