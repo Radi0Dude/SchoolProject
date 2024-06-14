@@ -9,8 +9,7 @@ public class PreasurePlater : MonoBehaviour
 	public delegate void PlatePressed();
 	public static event PlatePressed OnPressed;
 
-	public delegate void PlateReleased();
-	public static event PlateReleased OnReleased;
+
 
 	[Tag]
 	[SerializeField]
@@ -27,6 +26,9 @@ public class PreasurePlater : MonoBehaviour
 
 	OpenDoor openDoor;
 
+
+	[SerializeField]
+	bool doOnce;
 	private void Start()
 	{
 		//Just For futureproof
@@ -34,45 +36,44 @@ public class PreasurePlater : MonoBehaviour
 	}
 	private void OnTriggerStay(Collider other)
 	{
-		if (multipleDoors)
-		{
-			openDoor.DoorOpener();
+        if (!doOnce)
+        {
+			if (multipleDoors)
+			{
+				openDoor.DoorOpener();
+			}
+
+			else 
+			{ 
+				if(other.gameObject.tag == interactableTag)
+				{	
+					if(OnPressed != null)
+					{
+						OnPressed();
+
+					}
+
+				}	
 		}
+        }
 
-		else 
-		{ 
-			if(other.gameObject.tag == playerTag || other.gameObject.tag == interactableTag)
-			{	
-				if(OnPressed != null)
-				{
-					OnPressed();
-
-				}
-
-			}	
-		}
 
 	}
-	private void OnTriggerExit(Collider other)
-	{
-		if (multipleDoors)
-		{
-			openDoor.DoorOpener();
-		}
 
-		else
+	private void OnTriggerEnter(Collider other)
+	{
+		if (doOnce)
 		{
-			if (other.gameObject.tag == playerTag || other.gameObject.tag == interactableTag)
+			if (other.gameObject.tag == interactableTag)
 			{
-				if (OnReleased != null)
+				if (OnPressed != null)
 				{
-					OnReleased();
+					OnPressed();
 
 				}
 
 			}
 		}
 	}
-
 
 }

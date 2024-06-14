@@ -18,27 +18,29 @@ public class OpenDoor : MonoBehaviour
 	float secondsForDoorOpen;
 
 	Vector3 curPos;
+	bool firstEnable = false;
 
 	bool isReady;
 
 	bool closingDoor;
 	private void Start()
 	{
-		startPos = transform.position;
-		endPos = new Vector3(transform.position.z, transform.position.y + endPosAmountUp, transform.position.z);
+		startPos = transform.localPosition;
+		endPos = new Vector3(transform.localPosition.x, transform.localPosition.y + endPosAmountUp, transform.localPosition.z);
 	}
 
 	private void OnEnable()
 	{
 		PreasurePlater.OnPressed += DoorOpener;
-		PreasurePlater.OnReleased += DoorClosed;
+		
+
 	}
 
 	private void OnDisable()
 	{
 		PreasurePlater.OnPressed -= DoorOpener;
-		PreasurePlater.OnReleased += DoorClosed;
 
+		firstEnable = true;
 	}
 	public void DoorOpener()
 	{
@@ -48,44 +50,11 @@ public class OpenDoor : MonoBehaviour
 		}
 		timer = (Time.time - startTime) / secondsForDoorOpen;
 
-		transform.position = Vector3.Lerp(startPos, endPos, timer);
-		isReady = false;
+		transform.localPosition = Vector3.Lerp(startPos, endPos, timer);
+	
 	}
 
-	private void DoorClosed()
-	{
-		
-		closingDoor = true;
-		StartCoroutine(CloseDoor());
-	}
+	
 
-	IEnumerator CloseDoor()
-	{
-
-		//Fix
-		while(closingDoor)
-		{
-			if (timer > 1 && timer < 0 && !isReady)
-			{
-				startTime = Time.time + timer;
-			}
-			if (timer < 1 && !isReady)
-			{
-				timer = 0;
-				startTime = Time.time;
-				isReady = true;
-			}
-			timer = (Time.time - startTime) / secondsForDoorOpen;
-			if (isReady)
-			{
-				Debug.Log("Heu");
-				transform.position = Vector3.Lerp(endPos, startPos, timer);
-			}
-			yield return new WaitForEndOfFrame();
-			if(timer > 1)
-			{
-				closingDoor = false;
-			}
-		}
-	}
+	
 }

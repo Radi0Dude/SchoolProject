@@ -1,9 +1,4 @@
-using JetBrains.Annotations;
 using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -212,6 +207,11 @@ public class RBCharacterController : MonoBehaviour
 
 	private void Swimming()
 	{
+		if (dir != Vector2.zero)
+		{
+			transform.localEulerAngles = new Vector3(0, cam.transform.localEulerAngles.y, 0);
+			Debug.Log("Ejjjjj");
+		}
 		Debug.Log("you be swimming");
 		if (rb.useGravity)
 		{			
@@ -222,10 +222,20 @@ public class RBCharacterController : MonoBehaviour
 		{
 			swimUp = 1;
 		}
-		else
+		else if (Input.GetKey(KeyCode.LeftControl))
+		{
+			swimUp = -1;
+		}
+		else if (!Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.LeftControl))
 		{
 			swimUp = 0;
 		}
+		else if(Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.LeftControl))
+		{
+			swimUp = 0;
+		}
+		
+		
 		rb.AddRelativeForce(dir.x * playerSpeed, swimUp * playerSpeed, dir.y * playerSpeed);
 		
 	}
